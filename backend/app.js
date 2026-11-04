@@ -15,24 +15,26 @@ const weightRoutes = require("./routes/weightRoutes");
 
 const app = express();
 
-// CORS configuration
-const allowedOrigins = [
-  "https://balancebite-six.vercel.app",
-];
+const allowedOrigins = (
+  process.env.CORS_ORIGINS || ""
+)
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests without Origin (e.g. Postman)
+    // Allow Postman and server-to-server requests
     if (!origin) {
       return callback(null, true);
     }
 
-    // Allow local Vite development ports
+    // Allow local development
     const isLocalOrigin =
       /^http:\/\/localhost:\d+$/.test(origin) ||
       /^http:\/\/127\.0\.0\.1:\d+$/.test(origin);
 
-    // Allow configured production origins
+    // Allow only configured production domains
     const isProductionOrigin =
       allowedOrigins.includes(origin);
 
@@ -40,7 +42,9 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    return callback(new Error("CORS origin not allowed"));
+    return callback(
+      new Error("CORS origin not allowed")
+    );
   },
 };
 
