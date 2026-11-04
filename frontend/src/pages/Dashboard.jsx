@@ -8,7 +8,7 @@ import NutritionInsights from "../components/NutritionInsights";
 import AIAssistant from "../components/AIAssistant";
 import WaterTracker from "../components/WaterTracker";
 import WeightTracker from "../components/WeightTracker";
-
+import HeightProfile from "../components/HeightProfile";
 function Dashboard() {
   const navigate = useNavigate();
 
@@ -232,6 +232,10 @@ function Dashboard() {
         {/* WATER TRACKING */}
         <section className="dashboard-section">
           <WaterTracker />
+        </section>
+        {/* PERSONAL BODY PROFILE */}
+        <section className="dashboard-section">
+          <HeightProfile />
         </section>
 
         {/* WEIGHT TRACKING */}
